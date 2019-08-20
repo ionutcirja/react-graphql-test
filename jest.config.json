@@ -8,6 +8,7 @@
     "!**/node_modules/**",
     "!**/style/**",
     "!**/routes/**",
+    "!**/config/**",
     "!coverage/**",
     "!webpack.dev.config.js",
     "!client/index.js"
