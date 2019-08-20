@@ -2,6 +2,7 @@
 import React from 'react';
 import type { ComponentType } from 'react';
 import { Switch, Route } from 'react-router';
+import { Wrapper } from './style';
 
 type RouteProps = {
   key: string,
@@ -15,21 +16,23 @@ type Props = {
 };
 
 const App = ({ routes }: Props) => (
-  <Switch>
-    {routes.map(({
-      key,
-      path,
-      exact,
-      component,
-    }) => (
-      <Route
-        key={key}
-        path={path}
-        exact={exact}
-        component={component}
-      />
-    ))}
-  </Switch>
+  <Wrapper>
+    <Switch>
+      {routes.map(({
+        key,
+        path,
+        exact,
+        component,
+      }) => (
+        <Route
+          key={key}
+          path={path}
+          exact={exact}
+          component={component}
+        />
+      ))}
+    </Switch>
+  </Wrapper>
 );
 
 export default App;
