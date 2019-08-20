@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 const Dashboard = () => (
   <div>
-    <Link to="/countries">
-      Countries
+    <Link to="/continents">
+      Continents
     </Link>
   </div>
 );
