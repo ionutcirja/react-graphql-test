@@ -1,0 +1,4 @@
+/coverage/**
+webpack.dev.config.js
+webpack.prod.config.js
+README.md

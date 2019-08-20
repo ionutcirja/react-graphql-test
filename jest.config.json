@@ -1,0 +1,18 @@
+{
+  "verbose": true,
+  "clearMocks": true,
+  "restoreMocks": true,
+  "collectCoverage": true,
+  "collectCoverageFrom": [
+    "**/*.js",
+    "!**/node_modules/**",
+    "!**/style/**",
+    "!**/routes/**",
+    "!coverage/**",
+    "!webpack.dev.config.js",
+    "!client/index.js"
+  ],
+  "testMatch": [
+    "**/__tests__/?(*.)(spec|test).js"
+  ]
+}
