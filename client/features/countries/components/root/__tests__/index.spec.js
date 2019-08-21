@@ -73,6 +73,7 @@ describe('Countries component', () => {
       {
         name: 'Denmark',
         code: 'DK',
+        native: 'Denmark',
         continent: {
           name: 'Europe',
         },
@@ -80,6 +81,7 @@ describe('Countries component', () => {
       {
         name: 'Germany',
         code: 'DE',
+        native: 'Germany',
         continent: {
           name: 'Europe',
         },
@@ -109,7 +111,7 @@ describe('Countries component', () => {
     for (let i = 0; i < countries.length; i += 1) {
       expect(
         container.querySelector(`a[href="/countries/${countries[i].code}"]`).innerHTML,
-      ).toEqual(`${countries[i].name} (${countries[i].continent.name})`);
+      ).toEqual(`${countries[i].name} (${countries[i].native}) - ${countries[i].continent.name}`);
     }
   });
   
@@ -119,10 +121,12 @@ describe('Countries component', () => {
       {
         name: 'United Kingdom',
         code: 'UK',
+        native: 'United Kingdom',
       },
       {
         name: 'France',
         code: 'FR',
+        native: 'France',
       },
     ];
     const mocks = [
@@ -157,7 +161,7 @@ describe('Countries component', () => {
     for (let i = 0; i < countries.length; i += 1) {
       expect(
         container.querySelector(`a[href="/countries/${countries[i].code}"]`).innerHTML,
-      ).toEqual(countries[i].name);
+      ).toEqual(`${countries[i].name} (${countries[i].native})`);
     }
   });
 });

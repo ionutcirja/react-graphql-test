@@ -40,6 +40,7 @@ export const GET_COUNTRIES_QUERY = gql`
     countries {
       name,
       code,
+      native,
       continent {
         name
       }
@@ -53,7 +54,8 @@ export const GET_CONTINENT_COUNTRIES_QUERY = gql`
       name,
       countries {
         name,
-        code
+        code,
+        native
       }
     }
   }
@@ -84,12 +86,17 @@ const renderData = ({ list, cname }: RenderData) => (
     {Maybe.fromNull(list)
       .map((value) => (
         <ul>
-          {value.map(({ name, code, continent }) => (
+          {value.map(({
+            name,
+            code,
+            native,
+            continent,
+          }) => (
             <li key={code}>
               <Link to={`/countries/${code}`}>
                 {Maybe.fromNull(continent)
-                  .fold(name)(
-                    (cvalue) => `${name} (${cvalue.name})`,
+                  .fold(`${name} (${native})`)(
+                    (cvalue) => `${name} (${native}) - ${cvalue.name}`,
                   )}
               </Link>
             </li>
