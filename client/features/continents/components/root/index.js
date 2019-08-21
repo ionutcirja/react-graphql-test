@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
+import { Maybe } from 'monet';
 import type { Continent } from 'types';
 
 type ContinentsData = {|
@@ -24,27 +25,44 @@ export const GET_CONTINENTS_QUERY = gql`
   }
 `;
 
+const renderLoading = () => (
+  <span>Loading continents list...</span>
+);
+
+const renderError = (message?: String) => (
+  Maybe.fromNull(message)
+    .map((value) => (<span>{value}</span>))
+    .orSome('')
+);
+
+const renderData = (list?: Array<Continent>) => (
+  Maybe.fromNull(list)
+    .map((value) => (
+      <ul>
+        {value.map(({ name, code }) => (
+          <li key={code}>
+            <Link to={`/continents/${code}`}>
+              {name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    ))
+    .orSome('')
+);
+
 const Continents = () => {
   const { loading, error, data } = useQuery<Response>(GET_CONTINENTS_QUERY);
   
-  if (loading) {
-    return <span>Loading continents list...</span>;
-  }
-  
-  if (error) {
-    return <span>{error.message}</span>;
-  }
-  
   return (
-    <ul>
-      {data.continents.map(({ name, code }) => (
-        <li key={code}>
-          <Link to={`/continents/${code}`}>
-            {name}
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <div>
+      <Link to="/dashboard">
+        Back
+      </Link>
+      {loading && renderLoading()}
+      {error && renderError(error.message)}
+      {data && renderData(data.continents)}
+    </div>
   );
 };
 

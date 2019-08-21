@@ -9,10 +9,24 @@ import Continents, { GET_CONTINENTS_QUERY } from '..';
 describe('Continents component', () => {
   afterEach(cleanup);
   
+  it('should render a link to the dashboard route', () => {
+    const { container } = render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <MemoryRouter>
+          <Continents />
+        </MemoryRouter>
+      </MockedProvider>,
+    );
+  
+    expect(container.querySelector('a[href="/dashboard"]')).toBeDefined();
+  });
+  
   it('should render a loading message on query start', () => {
     const { getByText } = render(
       <MockedProvider mocks={[]} addTypename={false}>
-        <Continents />
+        <MemoryRouter>
+          <Continents />
+        </MemoryRouter>
       </MockedProvider>,
     );
 
@@ -27,12 +41,15 @@ describe('Continents component', () => {
         },
         result: {
           errors: [new GraphQLError('Loading error')],
+          data: {},
         },
       },
     ];
     const { getByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <Continents />
+        <MemoryRouter>
+          <Continents />
+        </MemoryRouter>
       </MockedProvider>,
     );
     await wait(0);
