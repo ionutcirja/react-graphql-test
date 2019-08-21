@@ -1,5 +1,12 @@
 {
   "parser": "babel-eslint",
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["client"]
+      }
+    }
+  },
   "extends": [
     "plugin:flowtype/recommended",
     "airbnb"

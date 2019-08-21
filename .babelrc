@@ -19,6 +19,16 @@
       {
         "fileName": false
       }
-    ]
+    ],
+    ["module-resolver", {
+      "root": ["./client"],
+      "alias": {
+        "config": "./client/config",
+        "features": "./client/features",
+        "types": "./client/types",
+        "style": "./client/style"
+      },
+      "cwd": "packagejson"
+    }]
   ]
 }

@@ -1,8 +1,8 @@
-import Dashboard from '../../dashboard/components/root';
-import Continents from '../../continents/components/root';
-import Continent from '../../continent/components/root';
-import Countries from '../../countries/components/root';
-import Country from '../../country/components/root';
+import Dashboard from 'features/dashboard/components/root';
+import Continents from 'features/continents/components/root';
+import Continent from 'features/continent/components/root';
+import Countries from 'features/countries/components/root';
+import Country from 'features/country/components/root';
 
 export default [
   {
@@ -14,11 +14,12 @@ export default [
   {
     key: 'continents',
     path: '/continents',
+    exact: true,
     component: Continents,
   },
   {
     key: 'continent',
-    path: '/continent/:id',
+    path: '/continents/:code',
     component: Continent,
   },
   {
@@ -28,7 +29,7 @@ export default [
   },
   {
     key: 'country',
-    path: '/countries/:id',
+    path: '/countries/:code',
     component: Country,
   },
   {
