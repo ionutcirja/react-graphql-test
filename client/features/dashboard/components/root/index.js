@@ -3,11 +3,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => (
-  <div>
+  <nav>
     <Link to="/continents">
       Continents
     </Link>
-  </div>
+    <Link to="/countries">
+      Countries
+    </Link>
+  </nav>
 );
 
 export default Dashboard;
