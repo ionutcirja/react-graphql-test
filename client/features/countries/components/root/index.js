@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 // @flow
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -19,9 +20,9 @@ type CountriesData = {|
 |}
 
 type ContinentData = {|
-  code: string,
-  name: string,
-  continent: CountriesData,
+  continent: CountriesData & {
+    name: string,
+  },
 |}
 
 type ErrorData = {|
@@ -38,7 +39,10 @@ export const GET_COUNTRIES_QUERY = gql`
   {
     countries {
       name,
-      code
+      code,
+      continent {
+        name
+      }
     }
   }
 `;
@@ -46,6 +50,7 @@ export const GET_COUNTRIES_QUERY = gql`
 export const GET_CONTINENT_COUNTRIES_QUERY = gql`
   query getContinent($code: String) {
     continent(code: $code) {
+      name,
       countries {
         name,
         code
@@ -64,20 +69,35 @@ const renderError = (message?: String) => (
     .orSome('')
 );
 
-const renderData = (list?: Array<Country>) => (
-  Maybe.fromNull(list)
-    .map((value) => (
-      <ul>
-        {value.map(({ name, code }) => (
-          <li key={code}>
-            <Link to={`/countries/${code}`}>
-              {name}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    ))
-    .orSome('')
+type RenderData = {
+  cname?: string,
+  list?: Array<Country>,
+}
+
+const renderData = ({ list, cname }: RenderData) => (
+  <>
+    {Maybe.fromNull(cname)
+      .map((value) => (
+        <span>{value}</span>
+      ))
+      .orSome('')}
+    {Maybe.fromNull(list)
+      .map((value) => (
+        <ul>
+          {value.map(({ name, code, continent }) => (
+            <li key={code}>
+              <Link to={`/countries/${code}`}>
+                {Maybe.fromNull(continent)
+                  .fold(name)(
+                    (cvalue) => `${name} (${cvalue.name})`,
+                  )}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ))
+      .orSome('')}
+  </>
 );
 
 const Countries = ({ match }: Props) => {
@@ -108,8 +128,11 @@ const Countries = ({ match }: Props) => {
         .orSome('')}
       {Maybe.fromNull(data)
         .map((value) => renderData(Maybe.fromNull(value.continent)
-          .fold(value.countries)(
-            (continent) => continent.countries,
+          .fold({ list: value.countries })(
+            (continent) => ({
+              cname: continent.name,
+              list: continent.countries,
+            }),
           )))
         .orSome('')}
     </div>

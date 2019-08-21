@@ -73,10 +73,16 @@ describe('Countries component', () => {
       {
         name: 'Denmark',
         code: 'DK',
+        continent: {
+          name: 'Europe',
+        },
       },
       {
         name: 'Germany',
         code: 'DE',
+        continent: {
+          name: 'Europe',
+        },
       },
     ];
     const mocks = [
@@ -103,11 +109,12 @@ describe('Countries component', () => {
     for (let i = 0; i < countries.length; i += 1) {
       expect(
         container.querySelector(`a[href="/countries/${countries[i].code}"]`).innerHTML,
-      ).toEqual(countries[i].name);
+      ).toEqual(`${countries[i].name} (${countries[i].continent.name})`);
     }
   });
   
-  it('should render a list of countries on query success if no route code param is passed', async () => {
+  it('should render the continent name and a list of countries '
+    + 'on query success if no route code param is passed', async () => {
     const countries = [
       {
         name: 'United Kingdom',
@@ -129,13 +136,14 @@ describe('Countries component', () => {
         result: {
           data: {
             continent: {
+              name: 'Europe',
               countries,
             },
           },
         },
       },
     ];
-    const { container } = render(
+    const { container, getByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter>
           <Countries match={{ params: { code: 'EU' } }} />
@@ -143,6 +151,8 @@ describe('Countries component', () => {
       </MockedProvider>,
     );
     await wait(0);
+  
+    expect(getByText('Europe')).toBeDefined();
     
     for (let i = 0; i < countries.length; i += 1) {
       expect(
