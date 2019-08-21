@@ -141,6 +141,7 @@ describe('Countries component', () => {
           data: {
             continent: {
               name: 'Europe',
+              code: 'EU',
               countries,
             },
           },
@@ -160,7 +161,7 @@ describe('Countries component', () => {
     
     for (let i = 0; i < countries.length; i += 1) {
       expect(
-        container.querySelector(`a[href="/countries/${countries[i].code}"]`).innerHTML,
+        container.querySelector(`a[href="/countries/${countries[i].code}?continent=EU"]`).innerHTML,
       ).toEqual(`${countries[i].name} (${countries[i].native})`);
     }
   });

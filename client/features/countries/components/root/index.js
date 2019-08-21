@@ -7,7 +7,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { Maybe } from 'monet';
 import type { Country } from 'types';
 
-type Props ={
+type Props = {
   match: {
     params: {
       code?: string,
@@ -21,6 +21,7 @@ type CountriesData = {|
 
 type ContinentData = {|
   continent: CountriesData & {
+    code: string,
     name: string,
   },
 |}
@@ -52,6 +53,7 @@ export const GET_CONTINENT_COUNTRIES_QUERY = gql`
   query getContinent($code: String) {
     continent(code: $code) {
       name,
+      code,
       countries {
         name,
         code,
@@ -73,10 +75,11 @@ const renderError = (message?: String) => (
 
 type RenderData = {
   cname?: string,
+  ccode?: string,
   list?: Array<Country>,
 }
 
-const renderData = ({ list, cname }: RenderData) => (
+const renderData = ({ list, cname, ccode }: RenderData) => (
   <>
     {Maybe.fromNull(cname)
       .map((value) => (
@@ -93,7 +96,14 @@ const renderData = ({ list, cname }: RenderData) => (
             continent,
           }) => (
             <li key={code}>
-              <Link to={`/countries/${code}`}>
+              <Link
+                to={`/countries/${code}${
+                  Maybe.fromNull(ccode)
+                    .fold('')(
+                      (cvalue) => `?continent=${cvalue}`,
+                    )
+                }`}
+              >
                 {Maybe.fromNull(continent)
                   .fold(`${name} (${native})`)(
                     (cvalue) => `${name} (${native}) - ${cvalue.name}`,
@@ -135,8 +145,11 @@ const Countries = ({ match }: Props) => {
         .orSome('')}
       {Maybe.fromNull(data)
         .map((value) => renderData(Maybe.fromNull(value.continent)
-          .fold({ list: value.countries })(
+          .fold({
+            list: value.countries,
+          })(
             (continent) => ({
+              ccode: continent.code,
               cname: continent.name,
               list: continent.countries,
             }),
