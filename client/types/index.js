@@ -23,5 +23,5 @@ export type Country = {
 export type Continent = {
   code: string,
   name: string,
-  countries: Array<Country>,
+  countries?: Array<Country>,
 }
