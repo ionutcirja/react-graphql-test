@@ -4,7 +4,7 @@ import { MockedProvider } from '@apollo/react-testing';
 import { render, cleanup } from '@testing-library/react';
 import { GraphQLError } from 'graphql';
 import wait from 'waait';
-import Countries, { GET_COUNTRIES_QUERY, GET_CONTINENT_COUNTRIES_QUERY } from '..';
+import Countries, { GET_ALL_COUNTRIES_QUERY, GET_CONTINENT_COUNTRIES_QUERY } from '..';
 
 describe('Countries component', () => {
   afterEach(cleanup);
@@ -49,7 +49,7 @@ describe('Countries component', () => {
     const mocks = [
       {
         request: {
-          query: GET_COUNTRIES_QUERY,
+          query: GET_ALL_COUNTRIES_QUERY,
         },
         result: {
           errors: [new GraphQLError('Loading error')],
@@ -90,7 +90,7 @@ describe('Countries component', () => {
     const mocks = [
       {
         request: {
-          query: GET_COUNTRIES_QUERY,
+          query: GET_ALL_COUNTRIES_QUERY,
         },
         result: {
           data: {

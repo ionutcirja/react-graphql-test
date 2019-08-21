@@ -36,7 +36,7 @@ type QueryVars = {
   code?: string,
 }
 
-export const GET_COUNTRIES_QUERY = gql`
+export const GET_ALL_COUNTRIES_QUERY = gql`
   {
     countries {
       name,
@@ -124,7 +124,7 @@ const Countries = ({ match }: Props) => {
     );
   
   const query = Maybe.fromNull(match.params.code)
-    .fold([GET_COUNTRIES_QUERY])(
+    .fold([GET_ALL_COUNTRIES_QUERY])(
       (code) => [
         GET_CONTINENT_COUNTRIES_QUERY,
         { variables: { code } },
