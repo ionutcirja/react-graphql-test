@@ -1,6 +1,5 @@
 import Dashboard from 'features/dashboard/components/root';
 import Continents from 'features/continents/components/root';
-import Continent from 'features/continent/components/root';
 import Countries from 'features/countries/components/root';
 import Country from 'features/country/components/root';
 
@@ -20,11 +19,12 @@ export default [
   {
     key: 'continent',
     path: '/continents/:code',
-    component: Continent,
+    component: Countries,
   },
   {
     key: 'countries',
     path: '/countries',
+    exact: true,
     component: Countries,
   },
   {
