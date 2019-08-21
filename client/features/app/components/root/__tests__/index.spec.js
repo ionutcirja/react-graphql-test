@@ -15,7 +15,7 @@ const renderWithRouter = (
   history,
 });
 
-describe('App', () => {
+describe('App component', () => {
   const routes = [
     {
       key: 'dashboard',
