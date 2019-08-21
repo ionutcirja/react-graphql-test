@@ -7,13 +7,21 @@ import wait from 'waait';
 import Continents, { GET_CONTINENTS_QUERY } from '..';
 
 describe('Continents component', () => {
+  const theme = {
+    colors: {
+      darkBlue: 'dark-blue',
+      blue: 'blue',
+      red: 'red',
+    },
+  };
+  
   afterEach(cleanup);
   
   it('should render a link to the dashboard route', () => {
     const { container } = render(
       <MockedProvider mocks={[]} addTypename={false}>
         <MemoryRouter>
-          <Continents />
+          <Continents theme={theme} />
         </MemoryRouter>
       </MockedProvider>,
     );
@@ -25,7 +33,7 @@ describe('Continents component', () => {
     const { getByText } = render(
       <MockedProvider mocks={[]} addTypename={false}>
         <MemoryRouter>
-          <Continents />
+          <Continents theme={theme} />
         </MemoryRouter>
       </MockedProvider>,
     );
@@ -48,7 +56,7 @@ describe('Continents component', () => {
     const { getByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter>
-          <Continents />
+          <Continents theme={theme} />
         </MemoryRouter>
       </MockedProvider>,
     );
@@ -83,7 +91,7 @@ describe('Continents component', () => {
     const { container } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter>
-          <Continents />
+          <Continents theme={theme} />
         </MemoryRouter>
       </MockedProvider>,
     );

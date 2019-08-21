@@ -1,11 +1,19 @@
 // @flow
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { withTheme } from 'styled-components';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { Maybe } from 'monet';
 import queryString from 'query-string';
-import type { Country } from 'types';
+import type { Country, Theme } from 'types';
+import {
+  BackLink,
+  Message,
+  ListTitle,
+  Details,
+  SubList,
+  ListItem,
+} from 'style/common';
 
 type Props = {
   match: {
@@ -16,6 +24,7 @@ type Props = {
   location: {
     search: string,
   },
+  theme: Theme,
 }
 
 type CountryData = {|
@@ -50,17 +59,23 @@ export const GET_COUNTRY_QUERY = gql`
   }
 `;
 
-const renderLoading = () => (
-  <span>Loading country data...</span>
+const renderLoading = (theme: Theme) => (
+  <Message color={theme.colors.darkBlue}>
+    Loading country data...
+  </Message>
 );
 
-const renderError = (message?: String) => (
+const renderError = (theme: Theme, message?: String) => (
   Maybe.fromNull(message)
-    .map((value) => (<span>{value}</span>))
+    .map((value) => (
+      <Message color={theme.colors.red}>
+        {value}
+      </Message>
+    ))
     .orSome('')
 );
 
-const renderData = ({
+const renderData = (theme: Theme, {
   name,
   native,
   continent,
@@ -69,37 +84,61 @@ const renderData = ({
   languages,
 }: Country) => (
   <>
-    <span>{name}</span>
+    <ListTitle color={theme.colors.turquoise}>
+      {name}
+    </ListTitle>
     {Maybe.fromNull(native)
-      .map((value) => (<span>{`Native name: ${value}`}</span>))
+      .map((value) => (
+        <Details color={theme.colors.darkBlue}>
+          {`Native name: ${value}`}
+        </Details>
+      ))
       .orSome('')}
     {Maybe.fromNull(continent)
-      .map((value) => (<span>{`Continent: ${value.name}`}</span>))
+      .map((value) => (
+        <Details color={theme.colors.darkBlue}>
+          {`Continent: ${value.name}`}
+        </Details>
+      ))
       .orSome('')}
     {Maybe.fromNull(phone)
-      .map((value) => (<span>{`Phone prefix: ${value}`}</span>))
+      .map((value) => (
+        <Details color={theme.colors.darkBlue}>
+          {`Phone prefix: ${value}`}
+        </Details>
+      ))
       .orSome('')}
     {Maybe.fromNull(currency)
-      .map((value) => (<span>{`Currency: ${value}`}</span>))
+      .map((value) => (
+        value
+        && (
+          <Details color={theme.colors.darkBlue}>
+            {`Currency: ${value}`}
+          </Details>
+        )))
       .orSome('')}
     {Maybe.fromNull(languages)
       .map((value) => (
-        <>
-          <span>Languages</span>
-          <ul>
-            {value.map(({ name, native }) => ( // eslint-disable-line no-shadow
-              <li key={name}>
-                {`${name} (Native name: ${native})`}
-              </li>
-            ))}
-          </ul>
-        </>
-      ))
+        value.length > 0
+        && (
+          <>
+            <Details color={theme.colors.darkBlue}>
+              Languages:
+            </Details>
+            <SubList>
+              {value.map(({ name, native }) => ( // eslint-disable-line no-shadow
+                <ListItem key={name} color={theme.colors.darkBlue}>
+                  {`${name} (Native name: ${native})`}
+                </ListItem>
+              ))}
+            </SubList>
+          </>
+        )))
       .orSome('')}
   </>
 );
 
-const CountryInfo = ({ match, location }: Props) => {
+const CountryInfo = ({ theme, match, location }: Props) => {
   const queries = queryString.parse(location.search);
   const backLink = Maybe.fromNull(queries.continent)
     .fold('/countries')(
@@ -113,20 +152,23 @@ const CountryInfo = ({ match, location }: Props) => {
   
   return (
     <div>
-      <Link to={backLink}>
+      <BackLink
+        color={theme.colors.blue}
+        to={backLink}
+      >
         Back
-      </Link>
+      </BackLink>
       {Maybe.fromFalsy(loading)
-        .map(() => renderLoading())
+        .map(() => renderLoading(theme))
         .orSome('')}
       {Maybe.fromNull(error)
-        .map((value) => renderError(value.message))
+        .map((value) => renderError(theme, value.message))
         .orSome('')}
       {Maybe.fromNull(data)
-        .map((value) => renderData({ ...value.country }))
+        .map((value) => renderData(theme, { ...value.country }))
         .orSome('')}
     </div>
   );
 };
 
-export default CountryInfo;
+export default withTheme(CountryInfo);

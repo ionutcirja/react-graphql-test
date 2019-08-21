@@ -1,16 +1,28 @@
 // @flow
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { withTheme } from 'styled-components';
+import type { Theme } from 'types';
+import { Nav, NavLink } from './style';
 
-const Dashboard = () => (
-  <nav>
-    <Link to="/continents">
+type Props = {
+  theme: Theme,
+}
+
+const Dashboard = ({ theme }: Props) => (
+  <Nav>
+    <NavLink
+      color={theme.colors.blue}
+      to="/continents"
+    >
       Continents
-    </Link>
-    <Link to="/countries">
+    </NavLink>
+    <NavLink
+      color={theme.colors.blue}
+      to="/countries"
+    >
       Countries
-    </Link>
-  </nav>
+    </NavLink>
+  </Nav>
 );
 
-export default Dashboard;
+export default withTheme(Dashboard);

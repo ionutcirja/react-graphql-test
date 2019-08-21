@@ -1,6 +1,17 @@
 /* eslint-disable no-use-before-define */
 // @flow
 
+export type Theme = {
+  colors: {
+    black: string,
+    grey: string,
+    blue: string,
+    darkBlue: string,
+    turquoise: string,
+    red: string,
+  },
+}
+
 export type Language = {
   code: string,
   name: string,

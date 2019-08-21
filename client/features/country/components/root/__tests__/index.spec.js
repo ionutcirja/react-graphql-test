@@ -7,6 +7,15 @@ import wait from 'waait';
 import Country, { GET_COUNTRY_QUERY } from '..';
 
 describe('Country component', () => {
+  const theme = {
+    colors: {
+      darkBlue: 'dark-blue',
+      blue: 'blue',
+      red: 'red',
+      turquoise: 'turquoise',
+    },
+  };
+  
   afterEach(cleanup);
   
   it('should render a link to the countries route of location continent query param is not passed', () => {
@@ -16,6 +25,7 @@ describe('Country component', () => {
           <Country
             match={{ params: { code: 'DE' } }}
             location={{ search: '' }}
+            theme={theme}
           />
         </MemoryRouter>
       </MockedProvider>,
@@ -31,6 +41,7 @@ describe('Country component', () => {
           <Country
             match={{ params: { code: 'DE' } }}
             location={{ search: '?continent=EU' }}
+            theme={theme}
           />
         </MemoryRouter>
       </MockedProvider>,
@@ -46,6 +57,7 @@ describe('Country component', () => {
           <Country
             match={{ params: { code: 'DE' } }}
             location={{ search: '' }}
+            theme={theme}
           />
         </MemoryRouter>
       </MockedProvider>,
@@ -75,6 +87,7 @@ describe('Country component', () => {
           <Country
             match={{ params: { code: 'DE' } }}
             location={{ search: '' }}
+            theme={theme}
           />
         </MemoryRouter>
       </MockedProvider>,
@@ -123,6 +136,7 @@ describe('Country component', () => {
           <Country
             match={{ params: { code: 'DK' } }}
             location={{ search: '' }}
+            theme={theme}
           />
         </MemoryRouter>
       </MockedProvider>,

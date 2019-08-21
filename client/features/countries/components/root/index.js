@@ -1,11 +1,19 @@
 /* eslint-disable react/require-default-props */
 // @flow
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { withTheme } from 'styled-components';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { Maybe } from 'monet';
-import type { Country } from 'types';
+import type { Theme, Country } from 'types';
+import {
+  BackLink,
+  Message,
+  List,
+  ListItem,
+  ListLink,
+  ListTitle,
+} from 'style/common';
 
 type Props = {
   match: {
@@ -13,6 +21,7 @@ type Props = {
       code?: string,
     },
   },
+  theme: Theme,
 }
 
 type CountriesData = {|
@@ -63,13 +72,19 @@ export const GET_CONTINENT_COUNTRIES_QUERY = gql`
   }
 `;
 
-const renderLoading = () => (
-  <span>Loading countries list...</span>
+const renderLoading = (theme: Theme) => (
+  <Message color={theme.colors.darkBlue}>
+    Loading countries list...
+  </Message>
 );
 
-const renderError = (message?: String) => (
+const renderError = (theme: Theme, message?: String) => (
   Maybe.fromNull(message)
-    .map((value) => (<span>{value}</span>))
+    .map((value) => (
+      <Message color={theme.colors.red}>
+        {value}
+      </Message>
+    ))
     .orSome('')
 );
 
@@ -79,24 +94,27 @@ type RenderData = {
   list?: Array<Country>,
 }
 
-const renderData = ({ list, cname, ccode }: RenderData) => (
+const renderData = (theme: Theme, { list, cname, ccode }: RenderData) => (
   <>
     {Maybe.fromNull(cname)
       .map((value) => (
-        <span>{value}</span>
+        <ListTitle color={theme.colors.turquoise}>
+          {value}
+        </ListTitle>
       ))
       .orSome('')}
     {Maybe.fromNull(list)
       .map((value) => (
-        <ul>
+        <List>
           {value.map(({
             name,
             code,
             native,
             continent,
           }) => (
-            <li key={code}>
-              <Link
+            <ListItem key={code}>
+              <ListLink
+                color={theme.colors.darkBlue}
                 to={`/countries/${code}${
                   Maybe.fromNull(ccode)
                     .fold('')(
@@ -108,16 +126,16 @@ const renderData = ({ list, cname, ccode }: RenderData) => (
                   .fold(`${name} (${native})`)(
                     (cvalue) => `${name} (${native}) - ${cvalue.name}`,
                   )}
-              </Link>
-            </li>
+              </ListLink>
+            </ListItem>
           ))}
-        </ul>
+        </List>
       ))
       .orSome('')}
   </>
 );
 
-const Countries = ({ match }: Props) => {
+const Countries = ({ theme, match }: Props) => {
   const backLink = Maybe.fromNull(match.params.code)
     .fold('/dashboard')(
       () => '/continents',
@@ -134,17 +152,20 @@ const Countries = ({ match }: Props) => {
   
   return (
     <div>
-      <Link to={backLink}>
+      <BackLink
+        color={theme.colors.blue}
+        to={backLink}
+      >
         Back
-      </Link>
+      </BackLink>
       {Maybe.fromFalsy(loading)
-        .map(() => renderLoading())
+        .map(() => renderLoading(theme))
         .orSome('')}
       {Maybe.fromNull(error)
-        .map((value) => renderError(value.message))
+        .map((value) => renderError(theme, value.message))
         .orSome('')}
       {Maybe.fromNull(data)
-        .map((value) => renderData(Maybe.fromNull(value.continent)
+        .map((value) => renderData(theme, Maybe.fromNull(value.continent)
           .fold({
             list: value.countries,
           })(
@@ -159,4 +180,4 @@ const Countries = ({ match }: Props) => {
   );
 };
 
-export default Countries;
+export default withTheme(Countries);

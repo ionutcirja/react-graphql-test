@@ -7,13 +7,25 @@ import wait from 'waait';
 import Countries, { GET_ALL_COUNTRIES_QUERY, GET_CONTINENT_COUNTRIES_QUERY } from '..';
 
 describe('Countries component', () => {
+  const theme = {
+    colors: {
+      darkBlue: 'dark-blue',
+      blue: 'blue',
+      red: 'red',
+      turquoise: 'turquoise',
+    },
+  };
+  
   afterEach(cleanup);
   
   it('should render a link to the dashboard route if route code param is not passed', () => {
     const { container } = render(
       <MockedProvider mocks={[]} addTypename={false}>
         <MemoryRouter>
-          <Countries match={{ params: {} }} />
+          <Countries
+            theme={theme}
+            match={{ params: {} }}
+          />
         </MemoryRouter>
       </MockedProvider>,
     );
@@ -25,7 +37,10 @@ describe('Countries component', () => {
     const { container } = render(
       <MockedProvider mocks={[]} addTypename={false}>
         <MemoryRouter>
-          <Countries match={{ params: { code: 'AU' } }} />
+          <Countries
+            theme={theme}
+            match={{ params: { code: 'AU' } }}
+          />
         </MemoryRouter>
       </MockedProvider>,
     );
@@ -37,7 +52,10 @@ describe('Countries component', () => {
     const { getByText } = render(
       <MockedProvider mocks={[]} addTypename={false}>
         <MemoryRouter>
-          <Countries match={{ params: {} }} />
+          <Countries
+            theme={theme}
+            match={{ params: {} }}
+          />
         </MemoryRouter>
       </MockedProvider>,
     );
@@ -59,7 +77,10 @@ describe('Countries component', () => {
     const { getByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter>
-          <Countries match={{ params: {} }} />
+          <Countries
+            theme={theme}
+            match={{ params: {} }}
+          />
         </MemoryRouter>
       </MockedProvider>,
     );
@@ -102,7 +123,10 @@ describe('Countries component', () => {
     const { container } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter>
-          <Countries match={{ params: {} }} />
+          <Countries
+            theme={theme}
+            match={{ params: {} }}
+          />
         </MemoryRouter>
       </MockedProvider>,
     );
@@ -151,7 +175,10 @@ describe('Countries component', () => {
     const { container, getByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <MemoryRouter>
-          <Countries match={{ params: { code: 'EU' } }} />
+          <Countries
+            theme={theme}
+            match={{ params: { code: 'EU' } }}
+          />
         </MemoryRouter>
       </MockedProvider>,
     );

@@ -4,12 +4,18 @@ import { render, cleanup } from '@testing-library/react';
 import Dashboard from '..';
 
 describe('Dashboard component', () => {
+  const theme = {
+    colors: {
+      blue: 'blue',
+    },
+  };
+  
   afterEach(cleanup);
   
   it('should render a link to the continents route', () => {
     const { container } = render(
       <MemoryRouter>
-        <Dashboard />
+        <Dashboard theme={theme} />
       </MemoryRouter>,
     );
   
@@ -19,7 +25,7 @@ describe('Dashboard component', () => {
   it('should render a link to the countries route', () => {
     const { container } = render(
       <MemoryRouter>
-        <Dashboard />
+        <Dashboard theme={theme} />
       </MemoryRouter>,
     );
 
