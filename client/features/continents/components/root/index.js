@@ -59,9 +59,15 @@ const Continents = () => {
       <Link to="/dashboard">
         Back
       </Link>
-      {loading && renderLoading()}
-      {error && renderError(error.message)}
-      {data && renderData(data.continents)}
+      {Maybe.fromFalsy(loading)
+        .map(() => renderLoading())
+        .orSome('')}
+      {Maybe.fromNull(error)
+        .map((value) => renderError(value.message))
+        .orSome('')}
+      {Maybe.fromNull(data)
+        .map((value) => renderData(value.continents))
+        .orSome('')}
     </div>
   );
 };
