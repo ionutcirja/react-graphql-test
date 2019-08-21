@@ -25,6 +25,7 @@
       "alias": {
         "config": "./client/config",
         "features": "./client/features",
+        "routes": "./client/routes",
         "types": "./client/types",
         "style": "./client/style"
       },
