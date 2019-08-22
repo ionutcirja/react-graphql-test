@@ -3,33 +3,37 @@ import Continents from 'features/continents/components/root';
 import Countries from 'features/countries/components/root';
 import Country from 'features/country/components/root';
 
+export const DASHBOARD_ROUTE = '/';
+export const CONTINENTS_ROUTE = '/continents';
+export const COUNTRIES_ROUTE = '/countries';
+
 export default [
   {
     key: 'dashboard',
-    path: '/',
+    path: DASHBOARD_ROUTE,
     exact: true,
     component: Dashboard,
   },
   {
     key: 'continents',
-    path: '/continents',
+    path: CONTINENTS_ROUTE,
     exact: true,
     component: Continents,
   },
   {
     key: 'continent',
-    path: '/continents/:code',
+    path: `${CONTINENTS_ROUTE}/:code`,
     component: Countries,
   },
   {
     key: 'countries',
-    path: '/countries',
+    path: COUNTRIES_ROUTE,
     exact: true,
     component: Countries,
   },
   {
     key: 'country',
-    path: '/countries/:code',
+    path: `${COUNTRIES_ROUTE}/:code`,
     component: Country,
   },
   {

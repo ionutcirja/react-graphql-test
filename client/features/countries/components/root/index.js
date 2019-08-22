@@ -7,6 +7,11 @@ import { useQuery } from '@apollo/react-hooks';
 import { Maybe } from 'monet';
 import type { Theme, Country } from 'types';
 import {
+  DASHBOARD_ROUTE,
+  CONTINENTS_ROUTE,
+  COUNTRIES_ROUTE,
+} from 'routes';
+import {
   BackLink,
   Message,
   List,
@@ -115,7 +120,7 @@ const renderData = (theme: Theme, { list, cname, ccode }: RenderData) => (
             <ListItem key={code}>
               <ListLink
                 color={theme.colors.darkBlue}
-                to={`/countries/${code}${
+                to={`${COUNTRIES_ROUTE}/${code}${
                   Maybe.fromNull(ccode)
                     .fold('')(
                       (cvalue) => `?continent=${cvalue}`,
@@ -137,8 +142,8 @@ const renderData = (theme: Theme, { list, cname, ccode }: RenderData) => (
 
 const Countries = ({ theme, match }: Props) => {
   const backLink = Maybe.fromNull(match.params.code)
-    .fold('/dashboard')(
-      () => '/continents',
+    .fold(DASHBOARD_ROUTE)(
+      () => CONTINENTS_ROUTE,
     );
   
   const query = Maybe.fromNull(match.params.code)

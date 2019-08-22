@@ -6,6 +6,10 @@ import { useQuery } from '@apollo/react-hooks';
 import { Maybe } from 'monet';
 import type { Continent, Theme } from 'types';
 import {
+  DASHBOARD_ROUTE,
+  CONTINENTS_ROUTE,
+} from 'routes';
+import {
   BackLink,
   Message,
   List,
@@ -60,7 +64,7 @@ const renderData = (theme: Theme, list?: Array<Continent>) => (
           <ListItem key={code}>
             <ListLink
               color={theme.colors.darkBlue}
-              to={`/continents/${code}`}
+              to={`${CONTINENTS_ROUTE}/${code}`}
             >
               {name}
             </ListLink>
@@ -78,7 +82,7 @@ const Continents = ({ theme }: Props) => {
     <div>
       <BackLink
         color={theme.colors.blue}
-        to="/dashboard"
+        to={DASHBOARD_ROUTE}
       >
         Back
       </BackLink>

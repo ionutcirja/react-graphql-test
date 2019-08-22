@@ -7,6 +7,10 @@ import { Maybe } from 'monet';
 import queryString from 'query-string';
 import type { Country, Theme } from 'types';
 import {
+  CONTINENTS_ROUTE,
+  COUNTRIES_ROUTE,
+} from 'routes';
+import {
   BackLink,
   Message,
   ListTitle,
@@ -141,8 +145,8 @@ const renderData = (theme: Theme, {
 const CountryInfo = ({ theme, match, location }: Props) => {
   const queries = queryString.parse(location.search);
   const backLink = Maybe.fromNull(queries.continent)
-    .fold('/countries')(
-      (value) => `/continents/${value}`,
+    .fold(COUNTRIES_ROUTE)(
+      (value) => `${CONTINENTS_ROUTE}/${value}`,
     );
   
   const { loading, error, data } = useQuery<Response, QueryVars>(
