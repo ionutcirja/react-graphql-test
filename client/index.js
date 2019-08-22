@@ -7,7 +7,7 @@ import client from 'config/apollo';
 import GlobalStyle from 'style';
 import theme from 'style/theme';
 import routes from 'routes';
-import App from 'features/app/components/root';
+import App from 'app/components/root';
 
 render(
   <ApolloProvider client={client}>
