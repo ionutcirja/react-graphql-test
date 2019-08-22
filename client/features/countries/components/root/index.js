@@ -10,6 +10,7 @@ import {
   DASHBOARD_ROUTE,
   CONTINENTS_ROUTE,
   COUNTRIES_ROUTE,
+  CONTINENT_QUERY_PARAM,
 } from 'routes';
 import {
   BackLink,
@@ -123,7 +124,7 @@ const renderData = (theme: Theme, { list, cname, ccode }: RenderData) => (
                 to={`${COUNTRIES_ROUTE}/${code}${
                   Maybe.fromNull(ccode)
                     .fold('')(
-                      (cvalue) => `?continent=${cvalue}`,
+                      (cvalue) => `?${CONTINENT_QUERY_PARAM}=${cvalue}`,
                     )
                 }`}
               >

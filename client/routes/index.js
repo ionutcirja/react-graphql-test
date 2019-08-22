@@ -7,6 +7,8 @@ export const DASHBOARD_ROUTE = '/';
 export const CONTINENTS_ROUTE = '/continents';
 export const COUNTRIES_ROUTE = '/countries';
 
+export const CONTINENT_QUERY_PARAM = 'continent';
+
 export default [
   {
     key: 'dashboard',
