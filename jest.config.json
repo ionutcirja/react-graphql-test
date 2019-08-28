@@ -4,17 +4,17 @@
   "restoreMocks": true,
   "collectCoverage": true,
   "collectCoverageFrom": [
-    "**/*.js",
+    "client/**/*.js",
     "!**/node_modules/**",
+    "!**/style.js",
     "!**/style/**",
     "!**/routes/**",
     "!**/types/**",
     "!**/config/**",
     "!coverage/**",
     "!webpack.dev.config.js",
-    "!client/index.js"
-  ],
-  "testMatch": [
-    "**/__tests__/?(*.)(spec|test).js"
+    "!webpack.prod.config.js",
+    "!client/index.js",
+    "!**/server/**"
   ]
 }
