@@ -10,6 +10,11 @@ yarn install
 
 In order to run the client in development mode, open a terminal window and type (any change into the code will rebuild the code):
 ```
+yarn run dev
+```
+
+In order to run the client in ssr mode, open a terminal window and type:
+```
 yarn start
 ```
 
