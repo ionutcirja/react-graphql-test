@@ -6,19 +6,28 @@
 yarn install
 ```
 
-## Startup
+## Development Startup
 
 In order to run the client in development mode, open a terminal window and type (any change into the code will rebuild the code):
 ```
 yarn run dev
 ```
 
-In order to run the client in ssr mode, open a terminal window and type:
+Now open http://localhost:8080/ in a browser (preferably Chrome).
+
+## Production Startup
+
+In order to run the app in production mode (SSR to be tested here), open a terminal window and type:
+```
+yarn build
+```
+
+followed by:
 ```
 yarn start
 ```
 
-Now open http://localhost:8080/ in a browser (preferably Chrome).
+Now open http://localhost:9000/ in a browser.
 
 ## Tests
 

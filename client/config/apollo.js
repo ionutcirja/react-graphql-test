@@ -1,6 +1,10 @@
 import ApolloClient from 'apollo-boost';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import config from '../../config';
 
-export default new ApolloClient({
-  uri: config.apiURL,
-});
+export default (initialState) => (
+  new ApolloClient({
+    uri: config.apiURL,
+    cache: new InMemoryCache().restore(initialState),
+  })
+);
