@@ -61,7 +61,8 @@ app.use((req, res) => {
   
   getDataFromTree(Layout).then(() => {
     res.locals.initialState = JSON.stringify(client.extract())
-      .replace(/'/g, "\\'");
+      .replace(/'/g, "\\'")
+      .replace(/"/g, '\\"');
     res.locals.reactMarkup = renderToStaticMarkup(Layout);
     res.locals.styles = sheet.getStyleTags();
     
