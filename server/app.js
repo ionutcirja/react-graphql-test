@@ -20,6 +20,7 @@ import GlobalStyle from '../client/style';
 import App from '../client/app/components/root';
 import routes from '../client/routes';
 import theme from '../client/style/theme';
+import config from '../config';
 
 const { PORT } = process.env;
 
@@ -36,7 +37,7 @@ app.use((req, res) => {
   
   const client = new ApolloClient({
     link: new HttpLink({
-      uri: 'https://countries.trevorblades.com/',
+      uri: config.apiURL,
       fetch,
     }),
     cache: new InMemoryCache(),

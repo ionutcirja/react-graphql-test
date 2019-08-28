@@ -1,5 +1,6 @@
 import ApolloClient from 'apollo-boost';
+import config from '../../config';
 
 export default new ApolloClient({
-  uri: 'https://countries.trevorblades.com/',
+  uri: config.apiURL,
 });
