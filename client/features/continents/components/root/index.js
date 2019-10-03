@@ -76,7 +76,11 @@ const renderData = (theme: Theme, list?: Array<Continent>) => (
 );
 
 const Continents = ({ theme }: Props) => {
-  const { loading, error, data } = useQuery<Response>(GET_CONTINENTS_QUERY);
+  const {
+    loading,
+    error,
+    data,
+  } = useQuery<Response>(GET_CONTINENTS_QUERY);
   
   return (
     <div>

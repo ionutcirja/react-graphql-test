@@ -142,14 +142,20 @@ const renderData = (theme: Theme, {
   </>
 );
 
-const CountryInfo = ({ theme, match, location }: Props) => {
-  const queries = queryString.parse(location.search);
-  const backLink = Maybe.fromNull(queries.continent)
+const computeBackLinkAddress = (search: string) => {
+  const queries = queryString.parse(search);
+  return Maybe.fromNull(queries.continent)
     .fold(COUNTRIES_ROUTE)(
       (value) => `${CONTINENTS_ROUTE}/${value}`,
     );
-  
-  const { loading, error, data } = useQuery<Response, QueryVars>(
+};
+
+const CountryInfo = ({ theme, match, location }: Props) => {
+  const {
+    loading,
+    error,
+    data,
+  } = useQuery<Response, QueryVars>(
     GET_COUNTRY_QUERY,
     { variables: { code: match.params.code } },
   );
@@ -158,7 +164,7 @@ const CountryInfo = ({ theme, match, location }: Props) => {
     <div>
       <BackLink
         color={theme.colors.blue}
-        to={backLink}
+        to={computeBackLinkAddress(location.search)}
       >
         Back
       </BackLink>

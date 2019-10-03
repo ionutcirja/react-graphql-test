@@ -140,26 +140,35 @@ const renderData = (theme: Theme, { list, cname, ccode }: RenderData) => (
   </>
 );
 
-const Countries = ({ theme, match }: Props) => {
-  const backLink = Maybe.fromNull(match.params.code)
+const computeBackLinkAddress = (code?: string) => (
+  Maybe.fromNull(code)
     .fold(DASHBOARD_ROUTE)(
       () => CONTINENTS_ROUTE,
-    );
-  
-  const query = Maybe.fromNull(match.params.code)
+    )
+);
+
+const computeQuery = (countryCode?: string) => (
+  Maybe.fromNull(countryCode)
     .fold([GET_ALL_COUNTRIES_QUERY])(
       (code) => [
         GET_CONTINENT_COUNTRIES_QUERY,
         { variables: { code } },
       ],
-    );
-  const { loading, error, data } = useQuery<Response, QueryVars>(...query);
+    )
+);
+
+const Countries = ({ theme, match }: Props) => {
+  const {
+    loading,
+    error,
+    data,
+  } = useQuery<Response, QueryVars>(...computeQuery(match.params.code));
   
   return (
     <div>
       <BackLink
         color={theme.colors.blue}
-        to={backLink}
+        to={computeBackLinkAddress(match.params.code)}
       >
         Back
       </BackLink>
