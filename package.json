@@ -33,7 +33,7 @@
     "history": "^4.9.0",
     "hogan-express": "^0.5.2",
     "monet": "^0.9.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "query-string": "^6.8.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
